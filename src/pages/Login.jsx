@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     StyleSheet, 
     SafeAreaView,
@@ -8,10 +8,30 @@ import {
     TextInput
 } from 'react-native';
 import { Input } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
+import { 
+    MaterialIcons, 
+    FontAwesome
+} from '@expo/vector-icons';
 import Typography from '../styles/typography';
+import Colors from '../styles/colors';
 
 export function Login(){
+    
+    const [emailIsFilled, setEmailIsFilled] = useState(false);
+    const [passIsFilled, setPassIsFilled] = useState(false);
+    
+    function handlePassIsFilled(value) {
+        (value.length > 0)? setPassIsFilled(true) : setPassIsFilled(false);
+    }
+
+    function handleEmailIsFilled(value) {
+        (value.length > 0)? setEmailIsFilled(true) : setEmailIsFilled(false);
+    }
+
+    function hiddenPassword(){
+        console.log('oi')
+    }
+
     return( 
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
@@ -35,18 +55,37 @@ export function Login(){
                     <Input
                         placeholder='Digite seu email ...'
                         leftIcon={
-                            <FontAwesome
-                                name="user"
-                            />    
-                        } 
+                            <MaterialIcons 
+                                name="email"
+                                size={24}
+                                color="blue"
+                            />
+                        }
+                        onChangeText={handleEmailIsFilled}
                     />
-                    <TextInput 
-                        style={styles.input}
-                        placeholder='Digite sua Senha ...'
+                    <Input
+                        placeholder='Digite seu senha ...'
+                        leftIcon={
+                            <FontAwesome 
+                                name="lock" 
+                                size={24} 
+                                color="blue"
+                            />
+                        }
+                        rightIcon={
+                            <Text>
+                                E
+                            </Text>
+                        }
+                        onChangeText={handlePassIsFilled}
                     />
                     <TouchableOpacity
                         activeOpacity={0.75}
-                        style={styles.button}
+                        style={[
+                            styles.button,
+                            (emailIsFilled && passIsFilled) && { backgroundColor: Colors.green }
+                        ]}
+                        disabled={!passIsFilled || !emailIsFilled}
                     >
                         <Text style={styles.textButton}>
                             Entrar
@@ -64,6 +103,7 @@ export function Login(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.body
     },
     content: {
         flex: 1,
@@ -72,7 +112,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25
     },
     card: {
-        backgroundColor: 'red',
+        backgroundColor: Colors.secondary,
         width: '100%',
         padding: 10,
         borderRadius: 10,
@@ -80,11 +120,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     tittle:{
-        color: 'blue',      //colors.heading,
+        color: Colors.headings,
         textAlign: 'center'
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: 'red',
         borderRadius: 10,
         padding: 10,
         width: '100%',
@@ -92,7 +132,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     textButton: {
-        textAlign: 'center'
+        textAlign: 'center',
+        color: Colors.white
     },
     input: {
         borderColor: 'gray',
