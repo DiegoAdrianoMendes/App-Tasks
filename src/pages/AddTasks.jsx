@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { 
     SafeAreaView,
     StyleSheet, 
@@ -6,16 +7,23 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/core';
+
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
 
 export function AddTasks(){
+    const navigation = useNavigation();
+
     const [taskIsFilled, setTaskIsFilled] = useState(false);
 
     function handleTaskIsFilled(value) {
         (value.length > 0)? setTaskIsFilled(true) : setTaskIsFilled(false);
+    }
+
+    function handleBack(){
+        navigation.goBack();
     }
 
     return( 
@@ -24,6 +32,7 @@ export function AddTasks(){
                 <View style={styles.navbar}>
                     <TouchableOpacity
                         activeOpacity={0.75}
+                        onPress={handleBack}
                     >
                         <FontAwesome5
                             name='arrow-left'
@@ -62,7 +71,7 @@ export function AddTasks(){
                         disabled={!taskIsFilled}
                     >
                         <Text style={styles.textButton}>
-                            Cadastrar
+                            Adicionar
                         </Text>
                     </TouchableOpacity>
                 </View>

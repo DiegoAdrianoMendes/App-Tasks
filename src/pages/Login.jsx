@@ -13,13 +13,16 @@ import {
 } from '@expo/vector-icons';
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
+import { useNavigation } from '@react-navigation/core';
 
 export function Login(){
     
+    const navigation = useNavigation();
+
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
     const [hiddenPassword, setHiddenPassword] = useState(true);
-    
+
     function handlePassIsFilled(value) {
         (value.length > 0)? setPassIsFilled(true) : setPassIsFilled(false);
     }
@@ -30,6 +33,14 @@ export function Login(){
 
     function handleHiddenPassword(){
         (hiddenPassword)? setHiddenPassword(false): setHiddenPassword(true);
+    }
+
+    function handlerLogin(){
+        navigation.navigate("AddTasks");
+    }
+
+    function handlerRegister(){
+        navigation.navigate("Register");
     }
 
     return( 
@@ -92,13 +103,16 @@ export function Login(){
                             (emailIsFilled && passIsFilled) && { backgroundColor: Colors.green }
                         ]}
                         disabled={!passIsFilled || !emailIsFilled}
+                        onPress={handlerLogin}
                     >
                         <Text style={styles.textButton}>
                             Entrar
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handlerRegister}
+                >
                     <Text style={styles.textButton}>
                         Ainda não possui conta ?
                     </Text>
