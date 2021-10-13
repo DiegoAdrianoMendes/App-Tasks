@@ -4,8 +4,7 @@ import {
     SafeAreaView,
     View,
     Text,
-    TouchableOpacity,
-    TextInput
+    TouchableOpacity
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { 
@@ -19,6 +18,7 @@ export function Login(){
     
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
+    const [hiddenPassword, setHiddenPassword] = useState(true);
     
     function handlePassIsFilled(value) {
         (value.length > 0)? setPassIsFilled(true) : setPassIsFilled(false);
@@ -28,8 +28,8 @@ export function Login(){
         (value.length > 0)? setEmailIsFilled(true) : setEmailIsFilled(false);
     }
 
-    function hiddenPassword(){
-        console.log('oi')
+    function handleHiddenPassword(){
+        (hiddenPassword)? setHiddenPassword(false): setHiddenPassword(true);
     }
 
     return( 
@@ -58,24 +58,30 @@ export function Login(){
                             <MaterialIcons 
                                 name="email"
                                 size={24}
-                                color="blue"
+                                color={Colors.gray}
                             />
                         }
                         onChangeText={handleEmailIsFilled}
                     />
                     <Input
+                        secureTextEntry={
+                            (hiddenPassword)? true : false
+                        }
                         placeholder='Digite seu senha ...'
                         leftIcon={
                             <FontAwesome 
                                 name="lock" 
                                 size={24} 
-                                color="blue"
+                                color={Colors.gray}
                             />
                         }
                         rightIcon={
-                            <Text>
-                                E
-                            </Text>
+                            <FontAwesome 
+                                name="eye-slash"
+                                size={24} 
+                                color={Colors.gray}
+                                onPress={handleHiddenPassword}
+                            />
                         }
                         onChangeText={handlePassIsFilled}
                     />
@@ -92,9 +98,11 @@ export function Login(){
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <Text>
-                    Ainda não possui conta ?
-                </Text>
+                <TouchableOpacity>
+                    <Text style={styles.textButton}>
+                        Ainda não possui conta ?
+                    </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     button: {
-        backgroundColor: 'red',
+        backgroundColor: Colors.gray_dark,
         borderRadius: 10,
         padding: 10,
         width: '100%',
@@ -134,18 +142,5 @@ const styles = StyleSheet.create({
     textButton: {
         textAlign: 'center',
         color: Colors.white
-    },
-    input: {
-        borderColor: 'gray',
-        color: 'blue',
-        width: '100%',
-        fontSize: 18,
-        textAlign: 'center',
-        padding: 10,
-        height: 40,
-        marginTop: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: 'yellow'
     },
 })

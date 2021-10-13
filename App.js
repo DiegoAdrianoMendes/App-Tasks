@@ -1,8 +1,8 @@
 import React from 'react';
-import { Login } from './src/pages/Login';
+import { AddTasks } from './src/pages/AddTasks';
 
 export default function App() {
     return (
-        <Login />
+        <AddTasks />
     );
 }
