@@ -1,3 +1,4 @@
+'use strict';
 import React, { useState } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { 
@@ -12,8 +13,9 @@ import { useNavigation } from '@react-navigation/core';
 
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
+import Layout from '../styles/layout';
 
-export function AddTasks(){
+export function AddTask(){
     const navigation = useNavigation();
 
     const [taskIsFilled, setTaskIsFilled] = useState(false);
@@ -27,8 +29,8 @@ export function AddTasks(){
     }
 
     return( 
-        <SafeAreaView style={styles.container}>
-            <View style={styles.container}>
+        <SafeAreaView style={Layout.container}>
+            <View style={Layout.container}>
                 <View style={styles.navbar}>
                     <TouchableOpacity
                         activeOpacity={0.75}
@@ -82,10 +84,6 @@ export function AddTasks(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //backgroundColor: Colors.body
-    },
     content: {
         flex: 1,
         alignItems: 'center',

@@ -1,4 +1,8 @@
+'use strict'
 import React, { useState } from 'react';
+import { Input } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/core';
+
 import { 
     StyleSheet, 
     SafeAreaView,
@@ -6,19 +10,18 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
-import { Input } from 'react-native-elements';
 import { 
     MaterialIcons, 
     FontAwesome
 } from '@expo/vector-icons';
+
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
-import { useNavigation } from '@react-navigation/core';
+import Layout from '../styles/layout';
 
 export function Login(){
     
     const navigation = useNavigation();
-
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
     const [hiddenPassword, setHiddenPassword] = useState(true);
@@ -36,7 +39,7 @@ export function Login(){
     }
 
     function handlerLogin(){
-        navigation.navigate("AddTasks");
+        navigation.navigate("Home");
     }
 
     function handlerRegister(){
@@ -44,7 +47,7 @@ export function Login(){
     }
 
     return( 
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={Layout.container}>
             <View style={styles.content}>
                 <Text  
                     style={[
@@ -123,10 +126,6 @@ export function Login(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Colors.body
-    },
     content: {
         flex: 1,
         alignItems: 'center',
@@ -155,6 +154,6 @@ const styles = StyleSheet.create({
     },
     textButton: {
         textAlign: 'center',
-        color: Colors.white
+        color: Colors.dark
     },
 })

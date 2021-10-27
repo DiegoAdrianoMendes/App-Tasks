@@ -1,4 +1,4 @@
-import React from "react";
+'use strict';
 import { StyleSheet } from "react-native";
 
 const Typography = StyleSheet.create({
@@ -9,6 +9,10 @@ const Typography = StyleSheet.create({
     h2: {
         fontSize: 28,
         lineHeight: 38
+    },
+    h3: {
+        fontSize: 20,
+        lineHeight: 28
     },
     text: {
         fontSize: 18,

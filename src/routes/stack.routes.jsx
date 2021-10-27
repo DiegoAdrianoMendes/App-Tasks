@@ -1,9 +1,14 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { AddTask } from "../pages/AddTask";
+import { AllTasks } from "../pages/AllTasks";
 import { Register } from "../pages/Register";
-import { AddTasks } from "../pages/AddTasks";
+import { TodayTasks } from "../pages/TodayTasks";
+import { MonthTasks } from "../pages/MonthTasks";
+import { TomorrowTasks } from "../pages/TomorrowTasks";
 
 import Colors from "../styles/colors";
 
@@ -29,8 +34,38 @@ const AppRoutes = React.FC = () => (
         />
 
         <stackRoutes.Screen
-            name="AddTasks"
-            component={AddTasks}
+            name="Home"
+            component={Home}
+        />
+
+        <stackRoutes.Screen
+            name="TodayTasks"
+            component={TodayTasks}
+        />
+
+        <stackRoutes.Screen
+            name="TomorrowTasks"
+            component={TomorrowTasks}
+        />
+
+        <stackRoutes.Screen
+            name="WeekTasks"
+            component={TodayTasks}
+        />
+
+        <stackRoutes.Screen
+            name="MonthTasks"
+            component={MonthTasks}
+        />
+
+        <stackRoutes.Screen
+            name="AllTasks"
+            component={AllTasks}
+        />
+
+        <stackRoutes.Screen
+            name="AddTask"
+            component={AddTask}
         />
     </stackRoutes.Navigator>
 )

@@ -1,3 +1,4 @@
+'use strict';
 import React, { useState } from 'react';
 import { 
     StyleSheet, 
@@ -13,6 +14,7 @@ import {
 } from '@expo/vector-icons';
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
+import Layout from '../styles/layout';
 
 export function Register(){
     
@@ -33,7 +35,7 @@ export function Register(){
         (hiddenPassword)? setHiddenPassword(false): setHiddenPassword(true);
     }
     return( 
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={Layout.container}>
             <View style={styles.content}>
                 <Text  
                     style={[
@@ -104,10 +106,6 @@ export function Register(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Colors.body
-    },
     content: {
         flex: 1,
         alignItems: 'center',
