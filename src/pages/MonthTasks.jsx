@@ -21,7 +21,9 @@ export function MonthTasks(){
     const navigation = useNavigation();
     
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'MonthTasks'
+        });
     }
 
     return( 
@@ -47,8 +49,8 @@ export function MonthTasks(){
                 <View style={styles.tasksContent}>
                     <ScrollView>
                         <View style={styles.tasksItems}>
-                            <Task title='Tarefa Mês 01'/>
-                            <Task title='Tarefa Mês 02'/>
+                            <Task title='Tarefa Mês 01' active='false'/>
+                            <Task title='Tarefa Mês 02' active='true'/>
                             <Task title='Tarefa Mês 03'/>
                             <Task title='Tarefa Mês 04'/>
                             <Task title='Tarefa Mês 05'/>

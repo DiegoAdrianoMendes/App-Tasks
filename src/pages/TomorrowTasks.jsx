@@ -21,7 +21,9 @@ export function TomorrowTasks(){
     const navigation = useNavigation();
     
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'TomorrowTasks'
+        });
     }
 
     return( 

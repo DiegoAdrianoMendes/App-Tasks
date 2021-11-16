@@ -1,12 +1,13 @@
 'use strict';
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     StyleSheet, 
     SafeAreaView,
     View,
     Text,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    TouchableHighlight
 } from 'react-native';
 import { 
     FontAwesome
@@ -19,9 +20,20 @@ import Task from '../components/Task';
 
 export function TodayTasks(){
     const navigation = useNavigation();
-    
+    const [countCheck, setCountCheck] = useState(1);
+    const [countNotCheck, setCountNotCheck] = useState(2);
+
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'TodayTasks'
+        });
+    }
+
+    function handleCheckTask(e){
+        var data = new Date();
+
+        console.log(e);
+        console.log(`${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}:${data.getMilliseconds()}`);
     }
 
     return( 
@@ -45,18 +57,24 @@ export function TodayTasks(){
                     </Text>
                 </View>
                 <View style={styles.tasksContent}>
+                    <View>
+                        <Text style={Typography.h3}>Concluidas: {countCheck}</Text>
+                        <Text style={Typography.h3}>Pendentes: {countNotCheck}</Text>
+                    </View>
                     <ScrollView>
                         <View style={styles.tasksItems}>
-                            <Task title='Tarefa 01'/>
-                            <Task title='Tarefa 02'/>
-                            <Task title='Tarefa 03'/>
-                            <Task title='Tarefa 04'/>
-                            <Task title='Tarefa 05'/>
-                            <Task title='Tarefa 06'/>
-                            <Task title='Tarefa 07'/>
-                            <Task title='Tarefa 08'/>
-                            <Task title='Tarefa 09'/>
-                            <Task title='Tarefa 10'/>
+                            <TouchableHighlight onPress={handleCheckTask}>
+                                <Task title='Tarefa 01' state='check'/>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={handleCheckTask}>
+                                <Task title='Tarefa 02' state='notCheck'/>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={handleCheckTask}>
+                                <Task title='Tarefa 03'/>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={handleCheckTask}>
+                                <Task title='Tarefa 04'/>
+                            </TouchableHighlight>
                         </View>
                     </ScrollView>
                 </View>

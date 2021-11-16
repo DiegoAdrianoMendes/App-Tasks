@@ -15,7 +15,9 @@ export function Home(){
     const navigation = useNavigation();
     
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'Home'
+        });
     }
 
     function handleTodayTasks() {
@@ -113,6 +115,5 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: Colors.white,
-        fontFamily: 'Lato'
     }
 })

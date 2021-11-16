@@ -21,7 +21,9 @@ export function WeekTasks(){
     const navigation = useNavigation();
     
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'WeekTasks'
+        });
     }
 
     return( 

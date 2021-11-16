@@ -19,6 +19,7 @@ export function AddTask(){
     const navigation = useNavigation();
 
     const [taskIsFilled, setTaskIsFilled] = useState(false);
+    const [task, setTask] = useState();
 
     function handleTaskIsFilled(value) {
         (value.length > 0)? setTaskIsFilled(true) : setTaskIsFilled(false);
@@ -26,6 +27,20 @@ export function AddTask(){
 
     function handleBack(){
         navigation.goBack();
+    }
+
+    function handleAddTask(){
+        console.log(task);
+        taskCreate();
+    }
+
+    function handleChangeTextTask(e){
+        setTask(e);
+        handleTaskIsFilled(e);
+    }
+    
+    function taskCreate() {
+        alert('Tarefa Criada');
     }
 
     return( 
@@ -62,7 +77,8 @@ export function AddTask(){
                                 color={Colors.gray}
                             />
                         }
-                        onChangeText={handleTaskIsFilled}
+                        value={task}
+                        onChangeText={handleChangeTextTask}
                     />
                     <TouchableOpacity
                         activeOpacity={0.75}
@@ -71,6 +87,7 @@ export function AddTask(){
                             (taskIsFilled) && { backgroundColor: Colors.green }
                         ]}
                         disabled={!taskIsFilled}
+                        onPress={handleAddTask}
                     >
                         <Text style={styles.textButton}>
                             Adicionar

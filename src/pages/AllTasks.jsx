@@ -21,7 +21,9 @@ export function AllTasks(){
     const navigation = useNavigation();
     
     function handleAddTask() {
-        navigation.navigate("AddTask");
+        navigation.navigate("AddTask",{
+            screen: 'allTasks'
+        });
     }
 
     return( 
