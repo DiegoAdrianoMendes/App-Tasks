@@ -17,17 +17,40 @@ import Colors from '../styles/colors';
 import Layout from '../styles/layout';
 
 export function Register(){
-    
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
     const [hiddenPassword, setHiddenPassword] = useState(true);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
     
+    const handleSingUp = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log("Registered: ", user);
+            })
+            .cath(error => alert(error.message));
+    }
+
+
     function handlePassIsFilled(value) {
-        (value.length > 0)? setPassIsFilled(true) : setPassIsFilled(false);
+        if(value.length > 4){
+            setPassIsFilled(true);
+            setPassword(value)
+        }else{
+            setPassIsFilled(false);
+        }
     }
 
     function handleEmailIsFilled(value) {
-        (value.length > 0)? setEmailIsFilled(true) : setEmailIsFilled(false);
+        if(emailRegex.test(value)){ 
+            setEmailIsFilled(true);
+            setEmail(value);
+        }else{
+            setEmailIsFilled(false);
+        } 
     }
 
    
@@ -94,6 +117,7 @@ export function Register(){
                             (emailIsFilled && passIsFilled) && { backgroundColor: Colors.green }
                         ]}
                         disabled={!passIsFilled || !emailIsFilled}
+                        onPress={handleSingUp}
                     >
                         <Text style={styles.textButton}>
                             Cadastrar

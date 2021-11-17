@@ -23,6 +23,11 @@ const AppRoutes = React.FC = () => (
             headerShown: false
         }}
     >
+         <stackRoutes.Screen
+            name="TodayTasks"
+            component={TodayTasks}
+        />
+        
         <stackRoutes.Screen
             name="Login"
             component={Login}
@@ -38,10 +43,7 @@ const AppRoutes = React.FC = () => (
             component={Home}
         />
 
-        <stackRoutes.Screen
-            name="TodayTasks"
-            component={TodayTasks}
-        />
+       
        
         <stackRoutes.Screen
             name="TomorrowTasks"

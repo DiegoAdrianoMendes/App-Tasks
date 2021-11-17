@@ -6,6 +6,9 @@ const Layout = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.body
+    },
+    textCenter:{
+        textAlign: 'center'
     }
 });
 

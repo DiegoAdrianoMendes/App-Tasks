@@ -1,56 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
-    Text,
+    Text
 } from 'react-native';
-import { 
-    FontAwesome
-} from '@expo/vector-icons';
+import DoubleClick from '../components/DoubleClick';
 import Colors from '../styles/colors';
 import Typography from '../styles/typography';
 
 const Task = (props) => {
-    let check = false;
-    let notCheck = false;
+    const [check, setCheck] = useState(false);
+    const [notCheck, setNotCheck] = useState(false);
+  
+    function handleDefaultTask(){
+        setCheck(false);
+        setNotCheck(false);
+    }
 
-    if(props.state == 'check'){
-        check = true;
-    }else if(props.state == 'notCheck'){
-        notCheck = true;
+    function handleCheckTask(){
+        setNotCheck(true);
+        setCheck(false);
+    }
+
+    function handleNotTask(){
+        setCheck(true);
+        setNotCheck(false);
     }
 
     return (
-        <View style={styles.item}>
-            <View style={styles.itemLeft}>
-                <View 
-                    style={[
-                        styles.square,
-                        (check) ? styles.active : (notCheck)? styles.notCheck : styles.defaultSquare,
-                        (check) ? styles.iconCheck: (notCheck)? styles.iconNotCheck : styles.defaultSquare,
-                    ]}
-                >
-                    <FontAwesome 
-                        name={(check)? "check" : (notCheck)? "close": ""} 
-                        size={24} 
-                        color={Colors.white} 
-                    />
-                </View>
+        <DoubleClick
+            singleTap={handleNotTask}
+            doubleTap={handleCheckTask}
+            onLongPress={handleDefaultTask}
+            delay={200}
+        >
+            <View style={styles.item}>
                 <Text style={[
                     styles.itemText,
                     Typography.h3
                 ]}>
                     {props.title}
                 </Text>
+                <View 
+                    style={[
+                        styles.circle,
+                        (check) ? styles.active : (notCheck)? styles.notCheck : styles.defaultCircle
+                    ]}
+                >
+                </View>
             </View>
-            <View 
-                style={[
-                    styles.circle,
-                    (check) ? styles.active : (notCheck)? styles.notCheck : styles.defaultCircle
-                ]}
-            >
-            </View>
-        </View>
+        </DoubleClick>
     );
 }
 
@@ -63,10 +62,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: 20,
-    },
-    itemLeft: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
     },
     circle: {
         width: 20,

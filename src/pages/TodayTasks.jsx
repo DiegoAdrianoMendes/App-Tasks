@@ -6,8 +6,7 @@ import {
     View,
     Text,
     ScrollView,
-    TouchableOpacity,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native';
 import { 
     FontAwesome
@@ -27,13 +26,6 @@ export function TodayTasks(){
         navigation.navigate("AddTask",{
             screen: 'TodayTasks'
         });
-    }
-
-    function handleCheckTask(e){
-        var data = new Date();
-
-        console.log(e);
-        console.log(`${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}:${data.getMilliseconds()}`);
     }
 
     return( 
@@ -57,24 +49,41 @@ export function TodayTasks(){
                     </Text>
                 </View>
                 <View style={styles.tasksContent}>
-                    <View>
-                        <Text style={Typography.h3}>Concluidas: {countCheck}</Text>
-                        <Text style={Typography.h3}>Pendentes: {countNotCheck}</Text>
+                    <View style={styles.wrapperCount}>
+                        <View style={styles.viewCount}>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Concluidas</Text>
+                        </View>
+                        <View style={styles.lineColum}>
+                        </View>
+                        <View style={styles.viewCount}>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countNotCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Pendentes</Text>
+                        </View>
                     </View>
                     <ScrollView>
                         <View style={styles.tasksItems}>
-                            <TouchableHighlight onPress={handleCheckTask}>
-                                <Task title='Tarefa 01' state='check'/>
-                            </TouchableHighlight>
-                            <TouchableHighlight onPress={handleCheckTask}>
-                                <Task title='Tarefa 02' state='notCheck'/>
-                            </TouchableHighlight>
-                            <TouchableHighlight onPress={handleCheckTask}>
-                                <Task title='Tarefa 03'/>
-                            </TouchableHighlight>
-                            <TouchableHighlight onPress={handleCheckTask}>
-                                <Task title='Tarefa 04'/>
-                            </TouchableHighlight>
+                            <Task title='Tarefa 01'/>
+                            <Task title='Tarefa 02'/>
+                            <Task title='Tarefa 03'/>
+                            <Task title='Tarefa 04'/>
+                            <Task title='Tarefa 02'/>
+                            <Task title='Tarefa 03'/>
+                            <Task title='Tarefa 04'/>
                         </View>
                     </ScrollView>
                 </View>
@@ -133,5 +142,20 @@ const styles = StyleSheet.create({
     menuIcon: {
         color: Colors.dark,
         marginRight: 10
+    },
+    wrapperCount: {
+        backgroundColor: Colors.white,
+        borderRadius: 10,
+        marginVertical: 10,
+        padding: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    lineColum: {
+        backgroundColor: Colors.black, 
+        height: '100%', 
+        width: 2,
+        marginHorizontal: 5,
+        borderRadius: 10
     }
 })

@@ -18,20 +18,43 @@ import {
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
 import Layout from '../styles/layout';
+import { auth } from '../config/firebase';
 
 export function Login(){
-    
     const navigation = useNavigation();
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
     const [hiddenPassword, setHiddenPassword] = useState(true);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
+
+    const handleLogin = () => {
+        auth
+            .singInWithEmailAndPassword(email, password)
+             .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log("Logged in with: ", user);
+            })
+            .cath(error => alert(error.message));
+    }
 
     function handlePassIsFilled(value) {
-        (value.length > 0)? setPassIsFilled(true) : setPassIsFilled(false);
+        if(value.length > 4){
+            setPassIsFilled(true);
+            setPassword(value)
+        }else{
+            setPassIsFilled(false);
+        }
     }
 
     function handleEmailIsFilled(value) {
-        (value.length > 0)? setEmailIsFilled(true) : setEmailIsFilled(false);
+        if(emailRegex.test(value)){ 
+            setEmailIsFilled(true);
+            setEmail(value);
+        }else{
+            setEmailIsFilled(false);
+        } 
     }
 
     function handleHiddenPassword(){
