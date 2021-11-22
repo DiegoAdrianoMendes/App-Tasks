@@ -8,16 +8,46 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import Colors from '../styles/colors';
 import Layout from '../styles/layout';
+import { auth } from '../config/firebase';
+import Typography from '../styles/typography';
+
+const Button = (props) => {
+    return(
+        <TouchableOpacity 
+            style={[
+                Layout.button,  
+                Layout.bgPrimary
+            ]}
+            activeOpacity={0.8}
+            onPress={props.action}
+        >
+        <Text 
+            style={[
+                Layout.white,
+                Layout.textCenter
+            ]}
+        >
+            {props.text}
+        </Text>
+    </TouchableOpacity>
+    );
+}
 
 export function Home(){
     const navigation = useNavigation();
-    
+    const name = (auth.currentUser?.email).split('@')[0];
+
+    const handleSingOut = () => {
+        auth
+            .signOut()
+            .then(() => {
+                navigation.replace("Login");
+            });
+    }
+
     function handleAddTask() {
-        navigation.navigate("AddTask",{
-            screen: 'Home'
-        });
+        navigation.navigate("AddTask");
     }
 
     function handleTodayTasks() {
@@ -42,78 +72,34 @@ export function Home(){
 
     return( 
         <SafeAreaView style={Layout.container}>
-            <View style={styles.tasksWrapper}>
-                <TouchableOpacity 
-                    style={styles.container}
-                    activeOpacity={0.8}
-                    onPress={handleAddTask}
+            <View style={styles.wrapper}>
+                <Text 
+                    style={[
+                        Typography.h2, 
+                        Layout.textCenter
+                    ]}
                 >
-                    <Text style={styles.text}>
-                        Adicionar Tasks
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={styles.container}
-                    activeOpacity={0.8}
-                    onPress={handleTodayTasks}
-                >
-                    <Text style={styles.text}>
-                        Tarefas Hoje
-                    </Text>
-                </TouchableOpacity>
+                    Bem Vindo {name}
+                </Text>
+                <Button text="Adicionar Tarefa" action={handleAddTask}/>
+                <Button text="Tarefas Diarias" action={handleTodayTasks}/>
+              {/*  
+                <Button text="Sair" action={}/>
+                <Button text="Sair" action={}/>
+                <Button text="Sair" action={}/>
+                <Button text="Sair" action={}/>
+                <Button text="Sair" action={}/> */}
+                <Button text="Sair" action={handleSingOut}/>
             </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    tasksContent: {
-        height: '85%',
-        width: '100%',
-    },
-    tasksWrapper: {
-        paddingTop: 80,
-        paddingHorizontal: 20,
-    },
-    title: {
-        fontWeight: 'bold',
-        color: Colors.headings
-    },
-    tasksItems: {
-        marginVertical: 20
-    },
-    buttonAdd: {
-        alignItems: 'center',
+    wrapper:{
+        flex: 1,
         justifyContent: 'center',
-        backgroundColor: Colors.secondary,
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        marginTop: 10,
-        marginRight: 15
-    },
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    menuIcon: {
-        color: Colors.dark,
-        marginRight: 10
-    },
-    container: {
-        backgroundColor: Colors.gray_light,
-        height: 56,
-        borderRadius: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10
-    },
-    text: {
-        fontSize: 16,
-        color: Colors.white,
+        paddingHorizontal: 25,
+        paddingVertical: 20,
     }
 })

@@ -3,17 +3,17 @@ export default {
     black: '#000000',
     white: '#ffffff',
 
-    body: '#D4D4D4',
-    primary:   '#7f5af0',
-    secondary: '#72757e',
-    headings:  '#16161a',
-    text:      '#94a1b2',
-    
-    red:    '#E45858',
-    green:  '#2CB67D',
-    yellow: '#ffc107',
-    dark:   '#16161a',
+    primary: "#D62059",
+    primaryLight: "#F9E4EB",
 
-    gray:      '#212529',
-    gray_light: '#6C757D',
+    secondaryLight80: "#F8F8F8",
+    secondaryLight: "#E9E9E9",
+    secondary: "#A6A6A6",
+    secondaryDark: "#555555",
+
+    success: "#008C5B",
+    successLight: "#C3E4D9",
+
+    danger: "#ff4646",
+    dangerLight: "#E45858",
 }

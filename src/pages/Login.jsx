@@ -1,8 +1,10 @@
 'use strict'
-import React, { useState } from 'react';
+import React, { 
+    useEffect,
+    useState 
+} from 'react';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
-
 import { 
     StyleSheet, 
     SafeAreaView,
@@ -27,22 +29,22 @@ export function Login(){
     const [hiddenPassword, setHiddenPassword] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
+    const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
     const handleLogin = () => {
-        auth
-            .singInWithEmailAndPassword(email, password)
-             .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log("Logged in with: ", user);
-            })
-            .cath(error => alert(error.message));
+        auth.signInWithEmailAndPassword(email, password);
+        /*.cath(error => alert(error.message));*/
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if(user){
+                navigation.replace("Home");
+            }
+        });
     }
 
     function handlePassIsFilled(value) {
-        if(value.length > 4){
+        if(value.length > 5){
             setPassIsFilled(true);
-            setPassword(value)
+            setPassword(value);
         }else{
             setPassIsFilled(false);
         }
@@ -61,30 +63,28 @@ export function Login(){
         (hiddenPassword)? setHiddenPassword(false): setHiddenPassword(true);
     }
 
-    function handlerLogin(){
-        navigation.navigate("Home");
-    }
-
-    function handlerRegister(){
+    function handleRegister(){
         navigation.navigate("Register");
     }
 
     return( 
         <SafeAreaView style={Layout.container}>
-            <View style={styles.content}>
+            <View style={styles.wrapper}>
                 <Text  
                     style={[
-                        Typography.h1, 
-                        styles.tittle
+                        Typography.h1,
+                        Layout.black,
                     ]}
                 >
-                    Entrar
+                    App Tasks 
                 </Text>
                 <View style={styles.card}>
                     <Text 
                         style={[
                             Typography.text,
-                            styles.tittle
+                            Layout.black,
+                            Layout.textCenter,
+                            {marginBottom:20}
                         ]}
                     >
                         Informe seus dados
@@ -95,7 +95,7 @@ export function Login(){
                             <MaterialIcons 
                                 name="email"
                                 size={24}
-                                color={Colors.gray}
+                                color={Colors.secondary}
                             />
                         }
                         onChangeText={handleEmailIsFilled}
@@ -109,14 +109,14 @@ export function Login(){
                             <FontAwesome 
                                 name="lock" 
                                 size={24} 
-                                color={Colors.gray}
+                                color={Colors.secondary}
                             />
                         }
                         rightIcon={
                             <FontAwesome 
                                 name="eye-slash"
                                 size={24} 
-                                color={Colors.gray}
+                                color={Colors.secondary}
                                 onPress={handleHiddenPassword}
                             />
                         }
@@ -125,22 +125,27 @@ export function Login(){
                     <TouchableOpacity
                         activeOpacity={0.75}
                         style={[
-                            styles.button,
-                            (emailIsFilled && passIsFilled) && { backgroundColor: Colors.green }
+                            Layout.button,
+                            (emailIsFilled && passIsFilled)? Layout.bgPrimary : Layout.bgPrimaryLight
                         ]}
                         disabled={!passIsFilled || !emailIsFilled}
-                        onPress={handlerLogin}
+                        onPress={handleLogin}
                     >
-                        <Text style={styles.textButton}>
+                        <Text 
+                            style={[
+                                Layout.textCenter,
+                                Layout.secondaryLight80
+                            ]}
+                        >
                             Entrar
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                    onPress={handlerRegister}
+                    onPress={handleRegister}
                 >
-                    <Text style={styles.textButton}>
-                        Ainda não possui conta ?
+                    <Text style={Layout.black}>
+                        Ainda não possui conta cadastre-se?
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -149,34 +154,16 @@ export function Login(){
 }
 
 const styles = StyleSheet.create({
-    content: {
+    wrapper: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 25
+        paddingHorizontal: 25,
     },
     card: {
-        backgroundColor: Colors.secondary,
         width: '100%',
         padding: 10,
-        borderRadius: 10,
         marginTop: 40,
         marginBottom: 20,
-    },
-    tittle:{
-        color: Colors.headings,
-        textAlign: 'center'
-    },
-    button: {
-        backgroundColor: Colors.gray_dark,
-        borderRadius: 10,
-        padding: 10,
-        width: '100%',
-        marginTop: 20,
-        marginBottom: 10,
-    },
-    textButton: {
-        textAlign: 'center',
-        color: Colors.dark
-    },
-})
+    }
+});

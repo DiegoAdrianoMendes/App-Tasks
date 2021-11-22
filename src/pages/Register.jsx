@@ -12,31 +12,51 @@ import {
     MaterialIcons, 
     FontAwesome
 } from '@expo/vector-icons';
+import { FancyAlert } from 'react-native-expo-fancy-alerts';
+import { useNavigation } from '@react-navigation/core';
+
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
 import Layout from '../styles/layout';
+import { auth } from '../config/firebase';
 
 export function Register(){
+    const navigation = useNavigation();
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passIsFilled, setPassIsFilled] = useState(false);
     const [hiddenPassword, setHiddenPassword] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i
+    const [isVisibleSuccess, setVisibleSuccess] = useState(false);
+    const [isVisibleError, setVisibleError] = useState(false);
+    const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
     
+    function toggleAlertSuccess(){
+        setVisibleSuccess(!isVisibleSuccess);
+    }
+
+    function toggleAlertError(){
+        setVisibleError(!isVisibleError);
+    }
+
+    function handleLogin() {
+        navigation.navigate("Login");
+    }
+
     const handleSingUp = () => {
         auth
             .createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                console.log("Registered: ", user);
+                toggleAlertSuccess();
             })
-            .cath(error => alert(error.message));
+           /*  .cath(error => {
+                toggleAlertError();
+            }); */
     }
 
-
     function handlePassIsFilled(value) {
-        if(value.length > 4){
+        if(value.length > 5){
             setPassIsFilled(true);
             setPassword(value)
         }else{
@@ -52,18 +72,72 @@ export function Register(){
             setEmailIsFilled(false);
         } 
     }
-
    
     function handleHiddenPassword(){
         (hiddenPassword)? setHiddenPassword(false): setHiddenPassword(true);
     }
+
     return( 
         <SafeAreaView style={Layout.container}>
+            <FancyAlert
+                visible={isVisibleSuccess}
+                onRequestClose={toggleAlertSuccess}
+                icon={
+                    <View 
+                        style={[
+                            Layout.contentAlert,
+                            Layout.bgSuccess
+                        ]}>
+                        <Text>🤓</Text>
+                    </View>
+                }
+                style={Layout.bgWhite}
+            >
+                <Text style={{ marginTop: -16 }}>
+                    Usuário Cadastrado.
+                </Text>
+                <TouchableOpacity 
+                    style={[
+                        Layout.btnAlert,
+                        Layout.bgSuccess
+                    ]} 
+                    activeOpacity={0.8}
+                    onPress={handleLogin}>
+                    <Text style={Layout.white}>OK</Text>
+                </TouchableOpacity>
+            </FancyAlert>
+            <FancyAlert
+                visible={isVisibleError}
+                onRequestClose={toggleAlertError}
+                icon={
+                    <View 
+                        style={[
+                            Layout.contentAlert,
+                            Layout.bgDanger
+                        ]}>
+                        <Text>😢</Text>
+                    </View>
+                }
+                style={Layout.bgWhite}
+            >
+                <Text style={{ marginTop: -16, marginBottom: 32 }}>
+                    Usuário não pode ser cadastrado.
+                </Text>
+                <TouchableOpacity 
+                    style={[
+                        Layout.btnAlert,
+                        Layout.bgDanger
+                    ]} 
+                    activeOpacity={0.8}
+                    onPress={toggleAlertSuccess}>
+                    <Text style={Layout.white}>OK</Text>
+                </TouchableOpacity>
+            </FancyAlert>
             <View style={styles.content}>
                 <Text  
                     style={[
                         Typography.h1, 
-                        styles.tittle
+                        Layout.black
                     ]}
                 >
                     Cadastre-se
@@ -72,7 +146,9 @@ export function Register(){
                     <Text 
                         style={[
                             Typography.text,
-                            styles.tittle
+                            Layout.black,
+                            Layout.textCenter,
+                            {marginBottom:20}
                         ]}
                     >
                         Informe seus dados
@@ -83,7 +159,7 @@ export function Register(){
                             <MaterialIcons 
                                 name="email"
                                 size={24}
-                                color={Colors.gray}
+                                color={Colors.secondary}
                             />
                         }
                         onChangeText={handleEmailIsFilled}
@@ -97,14 +173,14 @@ export function Register(){
                             <FontAwesome 
                                 name="lock" 
                                 size={24} 
-                                color={Colors.gray} 
+                                color={Colors.secondary} 
                             />
                         }
                         rightIcon={
                             <FontAwesome 
                                 name="eye-slash"
                                 size={24} 
-                                color={Colors.gray} 
+                                color={Colors.secondary} 
                                 onPress={handleHiddenPassword}
                             />
                         }
@@ -113,20 +189,25 @@ export function Register(){
                     <TouchableOpacity
                         activeOpacity={0.75}
                         style={[
-                            styles.button,
-                            (emailIsFilled && passIsFilled) && { backgroundColor: Colors.green }
+                            Layout.button,
+                            (emailIsFilled && passIsFilled)? Layout.bgPrimary : Layout.bgPrimaryLight
                         ]}
                         disabled={!passIsFilled || !emailIsFilled}
                         onPress={handleSingUp}
                     >
-                        <Text style={styles.textButton}>
+                        <Text 
+                            style={[
+                                Layout.textCenter,
+                                Layout.secondaryLight80
+                            ]}
+                        >
                             Cadastrar
                         </Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
-    );r
+    );
 }
 
 const styles = StyleSheet.create({
@@ -137,27 +218,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25
     },
     card: {
-        backgroundColor: Colors.secondary,
         width: '100%',
         padding: 10,
-        borderRadius: 10,
-        marginTop: 40,
-        marginBottom: 20,
-    },
-    tittle:{
-        color: Colors.headings,
-        textAlign: 'center'
-    },
-    button: {
-        backgroundColor: Colors.gray_dark,
-        borderRadius: 10,
-        padding: 10,
-        width: '100%',
         marginTop: 20,
-        marginBottom: 10,
-    },
-    textButton: {
-        textAlign: 'center',
-        color: Colors.white
+        marginBottom: 20,
     },
 })

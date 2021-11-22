@@ -74,13 +74,13 @@ const styles = StyleSheet.create({
         borderColor: Colors.primary
     },
     active: {
-        backgroundColor: Colors.green,
-        borderColor: Colors.green,
+        backgroundColor: Colors.success,
+        borderColor: Colors.success,
         opacity: 1
     },
     notCheck: {
-        backgroundColor: Colors.red,
-        borderColor: Colors.red,
+        backgroundColor: Colors.danger,
+        borderColor: Colors.danger,
         opacity: 1
     },
     square: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         paddingTop: 2
     },
     defaultSquare: {
-        backgroundColor: Colors.primary
+        backgroundColor: Colors.gray
     },
     itemText:{
         maxWidth: '80%',

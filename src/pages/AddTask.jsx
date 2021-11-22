@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
@@ -17,12 +18,26 @@ import Layout from '../styles/layout';
 
 export function AddTask(){
     const navigation = useNavigation();
-
     const [taskIsFilled, setTaskIsFilled] = useState(false);
-    const [task, setTask] = useState();
+    const [nameTask, setNameTask] = useState('');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [date, setDate] = useState(new Date());
+
+    function showDatePicker(){
+        setDatePickerVisibility(true);
+    };
+
+    function hideDatePicker(){
+        setDatePickerVisibility(false);
+    };
+
+    function handleConfirm(date){
+        setDate(date);
+        hideDatePicker();
+    };
 
     function handleTaskIsFilled(value) {
-        (value.length > 0)? setTaskIsFilled(true) : setTaskIsFilled(false);
+        (value.length > 2)? setTaskIsFilled(true) : setTaskIsFilled(false);
     }
 
     function handleBack(){
@@ -30,20 +45,22 @@ export function AddTask(){
     }
 
     function handleAddTask(){
-        console.log(task);
-        taskCreate();
+        console.log(nameTask, formatDateString(date));
     }
 
-    function handleChangeTextTask(e){
-        setTask(e);
-        handleTaskIsFilled(e);
+    function handleChangeTextTask(value){
+        setNameTask(value);
+        handleTaskIsFilled(value);
     }
     
-    function taskCreate() {
-        alert('Tarefa Criada');
+    function formatDateString(date){
+        let day = date.getDate();
+        let mouth = date.getMonth() + 1;
+        let year = date.getFullYear();
+        return `${day}/${mouth}/${year}`;
     }
 
-    return( 
+    return(
         <SafeAreaView style={Layout.container}>
             <View style={Layout.container}>
                 <View style={styles.navbar}>
@@ -60,36 +77,58 @@ export function AddTask(){
                     <Text 
                         style={[
                             Typography.text,
-                            styles.title
+                            Layout.white
                         ]}
                     >
-                        Adicionar Task
+                        Adicionar Tarefa
                     </Text>
                     <View></View>
                 </View>
                 <View style={styles.content}>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        date={date}
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
+                    <TouchableOpacity 
+                        style={[
+                            Layout.button,
+                            Layout.bgPrimaryLight
+                        ]} 
+                        onPress={showDatePicker}
+                        activeOpacity={0.8}
+                    >   
+                        <Text style={Layout.textCenter}>Selecione a Data: {formatDateString(date)}</Text>
+                    </TouchableOpacity>
                     <Input
                         placeholder='Nome da Tarefa'
                         leftIcon={
                             <FontAwesome5 
                                 name="tasks"
                                 size={24}
-                                color={Colors.gray}
+                                color={Colors.secondary}
                             />
                         }
-                        value={task}
+                        value={nameTask}
                         onChangeText={handleChangeTextTask}
                     />
                     <TouchableOpacity
                         activeOpacity={0.75}
                         style={[
-                            styles.button,
-                            (taskIsFilled) && { backgroundColor: Colors.green }
+                            Layout.button,
+                            (taskIsFilled)? Layout.bgSuccess : Layout.bgSuccessLight
                         ]}
                         disabled={!taskIsFilled}
                         onPress={handleAddTask}
                     >
-                        <Text style={styles.textButton}>
+                        <Text 
+                            style={[
+                                Layout.secondaryLight80,
+                                Layout.textCenter
+                            ]}
+                        >
                             Adicionar
                         </Text>
                     </TouchableOpacity>
@@ -108,17 +147,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25
     },
     navbar: {
-        backgroundColor: Colors.gray_dark,
+        backgroundColor: Colors.secondaryDark,
         height: 85,
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
         paddingTop:30,
-        borderBottomEndRadius: 5,
-        borderBottomStartRadius: 5
-    },
-    title:{
-        color: Colors.white
+        borderBottomEndRadius: 10,
+        borderBottomStartRadius: 10
     },
     button: {
         backgroundColor: Colors.gray_dark,

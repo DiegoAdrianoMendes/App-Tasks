@@ -1,7 +1,6 @@
 /* 
     Author: https://github.com/awshawka
     Project: https://github.com/awshawka/react-native-double-tap#readme
-    Customize: https://github.com/DiegoAdrianoMendes
 */
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";

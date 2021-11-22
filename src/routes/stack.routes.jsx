@@ -18,21 +18,16 @@ const AppRoutes = React.FC = () => (
     <stackRoutes.Navigator
         screenOptions={{
             contentStyle: {
-                backgroundColor: Colors.white
+                backgroundColor: Colors.grayLight
             },
             headerShown: false
         }}
     >
-         <stackRoutes.Screen
-            name="TodayTasks"
-            component={TodayTasks}
-        />
-        
         <stackRoutes.Screen
             name="Login"
             component={Login}
         />
-        
+
         <stackRoutes.Screen
             name="Register"
             component={Register}
@@ -43,7 +38,10 @@ const AppRoutes = React.FC = () => (
             component={Home}
         />
 
-       
+        <stackRoutes.Screen
+            name="TodayTasks"
+            component={TodayTasks}
+        />
        
         <stackRoutes.Screen
             name="TomorrowTasks"
