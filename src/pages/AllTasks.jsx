@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import { 
-    StyleSheet, 
     SafeAreaView,
     View,
     Text,
@@ -19,52 +18,74 @@ import Task from '../components/Task';
 
 export function AllTasks(){
     const navigation = useNavigation();
-    
+    const [countCheck, setCountCheck] = useState(1);
+    const [countNotCheck, setCountNotCheck] = useState(2);
+
     function handleAddTask() {
-        navigation.navigate("AddTask",{
-            screen: 'allTasks'
-        });
+        navigation.navigate("AddTask");
     }
 
     return( 
         <SafeAreaView style={Layout.container}>
-            <View style={styles.tasksWrapper}>
-                <View style={styles.header}>
-                    <TouchableOpacity 
-                        activeOpacity={0.5}
-                    >
-                        <FontAwesome 
-                            name="list" 
-                            size={24} 
-                            style={styles.menuIcon}
-                        />
-                    </TouchableOpacity>
+            <View style={Layout.taskWrapper}>
+                <View style={Layout.taskHeader}>
+                    <FontAwesome 
+                        name="list" 
+                        size={24} 
+                        style={Layout.menuTaskIcon}
+                    />
                     <Text style={[
-                        styles.title,
+                        Layout.title,
                         Typography.h2
                     ]}>
-                        Todas as tarefas.
+                        Tarefas para hoje.
                     </Text>
                 </View>
-                <View style={styles.tasksContent}>
+                <View style={Layout.taskContent}>
+                    <View style={Layout.taskCountWrapper}>
+                        <View>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Concluidas</Text>
+                        </View>
+                        <View style={Layout.taskLineColum}>
+                        </View>
+                        <View>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countNotCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Pendentes</Text>
+                        </View>
+                    </View>
                     <ScrollView>
-                        <View style={styles.tasksItems}>
-                            <Task title='Tarefa Mês 01'/>
-                            <Task title='Tarefa Mês 02'/>
-                            <Task title='Tarefa Mês 03'/>
-                            <Task title='Tarefa Mês 04'/>
-                            <Task title='Tarefa Mês 05'/>
-                            <Task title='Tarefa Mês 06'/>
-                            <Task title='Tarefa Mês 07'/>
-                            <Task title='Tarefa Mês 08'/>
-                            <Task title='Tarefa Mês 09'/>
-                            <Task title='Tarefa Mês 10'/>
+                        <View style={Layout.taskItems}>
+                            <Task title='Tarefa 41'/>
+                            <Task title='Tarefa 42'/>
+                            <Task title='Tarefa 43'/>
+                            <Task title='Tarefa 44'/>
+                            <Task title='Tarefa 45'/>
+                            <Task title='Tarefa 46'/>
+                            <Task title='Tarefa 47'/>
+                            <Task title='Tarefa 48'/>
+                            <Task title='Tarefa 49'/>
+                            <Task title='Tarefa 50'/>
                         </View>
                     </ScrollView>
                 </View>
-                <View style={styles.footer}>
+                <View style={Layout.taskFooter}>
                     <TouchableOpacity 
-                        style={styles.buttonAdd}
+                        style={Layout.buttonAddTask}
                         activeOpacity={0.5}
                         onPress={handleAddTask}
                     >
@@ -79,43 +100,3 @@ export function AllTasks(){
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    tasksContent: {
-        height: '85%',
-        width: '100%',
-    },
-    tasksWrapper: {
-        paddingTop: 80,
-        paddingHorizontal: 20,
-    },
-    title: {
-        fontWeight: 'bold',
-        color: Colors.headings
-    },
-    tasksItems: {
-        marginVertical: 20
-    },
-    buttonAdd: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Colors.secondary,
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        marginTop: 10,
-        marginRight: 15
-    },
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    menuIcon: {
-        color: Colors.dark,
-        marginRight: 10
-    }
-})

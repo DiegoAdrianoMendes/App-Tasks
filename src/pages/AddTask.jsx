@@ -11,6 +11,7 @@ import {
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { FancyAlert } from 'react-native-expo-fancy-alerts';
 
 import Typography from '../styles/typography';
 import Colors from '../styles/colors';
@@ -22,6 +23,11 @@ export function AddTask(){
     const [nameTask, setNameTask] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [date, setDate] = useState(new Date());
+    const [isVisibleModal, setIsVisibleModal] = useState(false);
+
+    function handleModal() {
+        setIsVisibleModal(!isVisibleModal);
+    }
 
     function showDatePicker(){
         setDatePickerVisibility(true);
@@ -46,6 +52,10 @@ export function AddTask(){
 
     function handleAddTask(){
         console.log(nameTask, formatDateString(date));
+        setNameTask('');
+        setDate(new Date());
+        handleModal();
+        handleBack();
     }
 
     function handleChangeTextTask(value){
@@ -62,6 +72,34 @@ export function AddTask(){
 
     return(
         <SafeAreaView style={Layout.container}>
+             <FancyAlert
+                visible={isVisibleModal}
+                onRequestClose={handleModal}
+                icon={
+                    <View 
+                        style={[
+                            Layout.contentAlert,
+                            Layout.bgWarning
+                        ]}>
+                        <Text>‼️</Text>
+                    </View>
+                }
+                style={Layout.bgWhite}
+            >
+                <Text style={{ marginTop: -16 }}>
+                    A tarefa foi adicionada.
+                </Text>
+                <TouchableOpacity 
+                    style={[
+                        Layout.btnAlert,
+                        Layout.bgSuccess,
+                        {marginRight: 10}
+                    ]} 
+                    activeOpacity={0.8}
+                    onPress={handleModal}>
+                    <Text style={[Layout.white]}>OK</Text>
+                </TouchableOpacity>
+            </FancyAlert>
             <View style={Layout.container}>
                 <View style={styles.navbar}>
                     <TouchableOpacity
@@ -95,12 +133,12 @@ export function AddTask(){
                     <TouchableOpacity 
                         style={[
                             Layout.button,
-                            Layout.bgPrimaryLight
+                            Layout.bgPrimary
                         ]} 
                         onPress={showDatePicker}
                         activeOpacity={0.8}
                     >   
-                        <Text style={Layout.textCenter}>Selecione a Data: {formatDateString(date)}</Text>
+                        <Text style={[Layout.textCenter, Layout.secondaryLight80]}>Selecione a Data: {formatDateString(date)}</Text>
                     </TouchableOpacity>
                     <Input
                         placeholder='Nome da Tarefa'
@@ -155,17 +193,5 @@ const styles = StyleSheet.create({
         paddingTop:30,
         borderBottomEndRadius: 10,
         borderBottomStartRadius: 10
-    },
-    button: {
-        backgroundColor: Colors.gray_dark,
-        borderRadius: 10,
-        padding: 10,
-        width: '100%',
-        marginTop: 20,
-        marginBottom: 10,
-    },
-    textButton: {
-        textAlign: 'center',
-        color: Colors.white
     },
 });

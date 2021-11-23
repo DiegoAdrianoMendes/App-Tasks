@@ -1,8 +1,5 @@
 'use strict'
-import React, { 
-    useEffect,
-    useState 
-} from 'react';
+import React, { useState } from 'react';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import { 

@@ -1,7 +1,6 @@
 'use strict';
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-    StyleSheet, 
     SafeAreaView,
     View,
     Text,
@@ -19,52 +18,74 @@ import Task from '../components/Task';
 
 export function TomorrowTasks(){
     const navigation = useNavigation();
-    
+    const [countCheck, setCountCheck] = useState(1);
+    const [countNotCheck, setCountNotCheck] = useState(2);
+
     function handleAddTask() {
-        navigation.navigate("AddTask",{
-            screen: 'TomorrowTasks'
-        });
+        navigation.navigate("AddTask");
     }
 
     return( 
         <SafeAreaView style={Layout.container}>
-            <View style={styles.tasksWrapper}>
-                <View style={styles.header}>
-                    <TouchableOpacity 
-                        activeOpacity={0.5}
-                    >
-                        <FontAwesome 
-                            name="list" 
-                            size={24} 
-                            style={styles.menuIcon}
-                        />
-                    </TouchableOpacity>
+            <View style={Layout.taskWrapper}>
+                <View style={Layout.taskHeader}>
+                    <FontAwesome 
+                        name="list" 
+                        size={24} 
+                        style={Layout.menuTaskIcon}
+                    />
                     <Text style={[
-                        styles.title,
+                        Layout.title,
                         Typography.h2
                     ]}>
-                        Tarefas para amanhã.
+                        Tarefas de ontem.
                     </Text>
                 </View>
-                <View style={styles.tasksContent}>
+                <View style={Layout.taskContent}>
+                    <View style={Layout.taskCountWrapper}>
+                        <View>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Concluidas</Text>
+                        </View>
+                        <View style={Layout.taskLineColum}>
+                        </View>
+                        <View>
+                            <Text 
+                                style={[
+                                    Layout.textCenter, 
+                                    Typography.h2
+                                ]}
+                            >
+                                {countNotCheck}
+                            </Text>
+                            <Text style={Typography.h3}>Pendentes</Text>
+                        </View>
+                    </View>
                     <ScrollView>
-                        <View style={styles.tasksItems}>
-                            <Task title='Tarefa Amanhã 01'/>
-                            <Task title='Tarefa Amanhã 02'/>
-                            <Task title='Tarefa Amanhã 03'/>
-                            <Task title='Tarefa Amanhã 04'/>
-                            <Task title='Tarefa Amanhã 05'/>
-                            <Task title='Tarefa Amanhã 06'/>
-                            <Task title='Tarefa Amanhã 07'/>
-                            <Task title='Tarefa Amanhã 08'/>
-                            <Task title='Tarefa Amanhã 09'/>
-                            <Task title='Tarefa Amanhã 10'/>
+                        <View style={Layout.taskItems}>
+                            <Task title='Tarefa 11'/>
+                            <Task title='Tarefa 12'/>
+                            <Task title='Tarefa 13'/>
+                            <Task title='Tarefa 14'/>
+                            <Task title='Tarefa 15'/>
+                            <Task title='Tarefa 16'/>
+                            <Task title='Tarefa 17'/>
+                            <Task title='Tarefa 18'/>
+                            <Task title='Tarefa 19'/>
+                            <Task title='Tarefa 20'/>
                         </View>
                     </ScrollView>
                 </View>
-                <View style={styles.footer}>
+                <View style={Layout.taskFooter}>
                     <TouchableOpacity 
-                        style={styles.buttonAdd}
+                        style={Layout.buttonAddTask}
                         activeOpacity={0.5}
                         onPress={handleAddTask}
                     >
@@ -79,43 +100,3 @@ export function TomorrowTasks(){
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    tasksContent: {
-        height: '85%',
-        width: '100%',
-    },
-    tasksWrapper: {
-        paddingTop: 80,
-        paddingHorizontal: 20,
-    },
-    title: {
-        fontWeight: 'bold',
-        color: Colors.headings
-    },
-    tasksItems: {
-        marginVertical: 20
-    },
-    buttonAdd: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Colors.secondary,
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        marginTop: 10,
-        marginRight: 15
-    },
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    menuIcon: {
-        color: Colors.dark,
-        marginRight: 10
-    }
-})

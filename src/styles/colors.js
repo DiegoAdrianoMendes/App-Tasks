@@ -16,4 +16,7 @@ export default {
 
     danger: "#ff4646",
     dangerLight: "#E45858",
+
+    warning: "#FFCA2C",
+    warningLight: "#FFCF00",
 }

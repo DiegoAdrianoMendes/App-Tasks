@@ -83,12 +83,10 @@ export function Home(){
                 </Text>
                 <Button text="Adicionar Tarefa" action={handleAddTask}/>
                 <Button text="Tarefas Diarias" action={handleTodayTasks}/>
-              {/*  
-                <Button text="Sair" action={}/>
-                <Button text="Sair" action={}/>
-                <Button text="Sair" action={}/>
-                <Button text="Sair" action={}/>
-                <Button text="Sair" action={}/> */}
+                <Button text="Tarefas de Ontem" action={handleTomorrowTasks}/>
+                <Button text="Tarefas da Semana" action={handleWeekTasks}/>
+                <Button text="Tarefas do Mes" action={handleMonthTasks}/>
+                <Button text="Todas as Tarefas" action={handleAllTasks}/>
                 <Button text="Sair" action={handleSingOut}/>
             </View>
         </SafeAreaView>
