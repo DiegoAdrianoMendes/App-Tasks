@@ -55,7 +55,6 @@ export function AddTask(){
         setNameTask('');
         setDate(new Date());
         handleModal();
-        handleBack();
     }
 
     function handleChangeTextTask(value){

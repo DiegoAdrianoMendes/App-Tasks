@@ -65,7 +65,7 @@ const Task = (props) => {
                         ]} 
                         activeOpacity={0.8}
                         onPress={handleDeleteTask}>
-                        <Text style={[Layout.white]}>OK</Text>
+                        <Text style={[Layout.white]}>SIM</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={[

@@ -40,7 +40,7 @@ export function Register(){
     }
 
     function handleLogin() {
-        navigation.navigate("Login");
+        navigation.replace("Login");
     }
 
     const handleSingUp = () => {
